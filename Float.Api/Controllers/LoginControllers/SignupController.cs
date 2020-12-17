@@ -1,4 +1,7 @@
-﻿using Float.Core.Model;
+﻿using Float.Core.Dto;
+using Float.Core.Interfaces;
+using Float.Core.Model;
+using Float.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,18 +14,27 @@ namespace Float.Api.Controllers.LoginControllers
 
     public class SignupController : Controller
     {
-        SignupModel _signupModel = new SignupModel();
-
-
-        public SignupController()
+        private readonly ISignupService _signupService;
+            
+        public SignupController(ISignupService signupService)
         {
-
+            _signupService = signupService;
         }
 
         [HttpGet("api/v1/get/signup")]
-        public IActionResult GetSignup()
+        public async Task<IActionResult> GetSignup([FromBody] SignupDto signup)
         {
-            return Ok(_signupModel);
+            dynamic result;
+
+            try
+            {
+                 result = await _signupService.AddUserinDb(signup);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
     }
 }

@@ -1,16 +1,13 @@
+using AutoMapper;
+using Float.Core.Interfaces;
+using Float.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Float.Api
 {
@@ -28,11 +25,17 @@ namespace Float.Api
         {
             services.AddControllers();
 
-            services.AddSwaggerGen(c =>
+            //Gets all the list of assemblies that implements AM Profile and load their configurations
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            //Registers all DI
+            services.AddScoped<ISignupService, SignupService>();
+
+            services.AddSwaggerGen(c => 
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Float.Api", Version = "v1" });
             });
 
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,7 +48,7 @@ namespace Float.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Float.Api v1"));
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
