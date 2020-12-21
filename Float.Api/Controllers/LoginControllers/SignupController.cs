@@ -33,7 +33,7 @@ namespace Float.Api.Controllers.LoginControllers
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
     }
