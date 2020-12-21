@@ -12,6 +12,7 @@ namespace Float.Core.Services
     {
         private readonly IMapper _mapper;
         private Signup _signUp = new Signup();
+
         public SignupService(IMapper mapper)
         {
             _mapper = mapper;
