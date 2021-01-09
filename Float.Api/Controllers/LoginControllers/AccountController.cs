@@ -1,7 +1,6 @@
-﻿using Float.Core.Dto;
-using Float.Core.Interfaces;
-using Float.Core.Model;
-using Float.Core.Services;
+﻿
+using Float.Application.DTOs.Account;
+using Float.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,24 +10,23 @@ using System.Threading.Tasks;
 namespace Float.Api.Controllers.LoginControllers
 {
     [ApiController]
-
-    public class SignupController : Controller
+    public class AccountController : Controller
     {
         private readonly ISignupService _signupService;
             
-        public SignupController(ISignupService signupService)
+        public AccountController(ISignupService signupService)
         {
             _signupService = signupService;
         }
 
-        [HttpGet("api/v1/get/signup")]
-        public async Task<IActionResult> GetSignup([FromBody] SignupDto signup)
+        [HttpPost("api/v1/get/signup")]
+        public async Task<IActionResult> GetSignup([FromBody] UserAccountDTO signup)
         {
             dynamic result;
 
             try
             {
-                 result = await _signupService.AddUserinDb(signup);
+                result = await _signupService.AddUserinDb(signup);
                 return Ok(result);
             }
             catch (Exception e)

@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Float.Core\Float.Core.csproj" />
+    <ProjectReference Include="..\Float.Application\Float.Application.csproj" />
+    <ProjectReference Include="..\Float.Infrastracture.Identity\Float.Infrastracture.Identity.csproj" />
+    <ProjectReference Include="..\Float.Infrastracture.Persistence\Float.Infrastracture.Persistence.csproj" />
   </ItemGroup>
 </Project>

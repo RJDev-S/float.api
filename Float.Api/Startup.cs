@@ -1,49 +1,38 @@
-using AutoMapper;
-using Float.Core.Interfaces;
-using Float.Core.Services;
+using Float.Application;
+using Float.Infrastracture.Identity;
+using Float.Infrastracture.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using System;
 
 namespace Float.Api
 {
     public class Startup
     {
+
+        //TODO: Seperate all configs per layer for better organization of classes per layer
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _config = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration _config { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            //services.AddDbContextPool<DataContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnection"),
-            //    new MySqlServerVersion(new Version(8, 0, 21)),
-            //     mySqlOptions => mySqlOptions.CharSetBehavior(CharSetBehavior.NeverAppend))
-            //.EnableSensitiveDataLogging()
-            //.EnableDetailedErrors());
-
-            //Gets all the list of assemblies that implements AM Profile and load their configurations
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            //Registers all DI
-            services.AddScoped<ISignupService, SignupService>();
+            services.AddApplicationLayer();
+            services.AddIdentityInfrastracture(_config);
+            services.AddPersistenceInfrastracture(_config);
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Float.Api", Version = "v1" });
             });
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
