@@ -1,13 +1,10 @@
-﻿using Float.Core.Dto;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Float.Application.DTOs.Account;
 using System.Threading.Tasks;
 
-namespace Float.Core.Interfaces
+namespace Float.Application.Interfaces
 {
     public interface ISignupService
     {
-         //Task<ServiceResponse<Signup>> AddUserinDb(SignupDto newUser);
+        Task<string> AddUserinDb(UserAccountDTO newUser);
     }
 }
