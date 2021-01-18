@@ -6,6 +6,6 @@ namespace Float.Application.Interfaces
 {
     public interface IAccountService
     {
-       Task<Response<UserAccountDTO>> CreateUserAccount(UserAccountDTO newUser);
+       Task<Response<string>> RegisterAsync(RegisterRequest registerRequest);
     }
 }

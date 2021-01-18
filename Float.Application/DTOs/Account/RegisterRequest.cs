@@ -8,6 +8,7 @@ namespace Float.Application.DTOs.Account
    public class RegisterRequest
     {
         [Required]
+        [MinLength(6)]
         public string Username { get; set; }
 
         [Required]
