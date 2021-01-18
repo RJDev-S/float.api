@@ -14,7 +14,7 @@ namespace Float.Application
         public static void AddApplicationLayer(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddTransient(typeof(ISignupService), typeof(SignupService));
+            services.AddTransient(typeof(IAccountService), typeof(AccountService));
         }
     }
 }
