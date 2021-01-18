@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Float.Application.DTOs.Account
 {
-   public class UserAccountDTO
+   public class RegisterRequest
     {
         [Required]
         public string Username { get; set; }
