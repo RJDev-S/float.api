@@ -7,8 +7,7 @@ namespace Float.Infrastracture.Identity.Model
 {
    public class ApplicationUser : IdentityUser
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
+        public string Token { get; set; }
+        public string DateCreated { get; set; }
     }
 }

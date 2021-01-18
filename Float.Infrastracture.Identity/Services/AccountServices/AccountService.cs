@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Float.Application.DTOs.Account;
+using Float.Application.Exceptions;
 using Float.Application.Interfaces;
 using Float.Application.Interfaces.Repositories;
 using Float.Application.Wrappers;
+using Float.Infrastracture.Identity.Model;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 
@@ -11,49 +15,46 @@ namespace Float.Application.Services.AccountServices
     public class AccountService : IAccountService
     {
         private readonly IMapper _mapper;
-        private readonly IUserAccountRepository<AccountService> _repository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AccountService(IMapper mapper, IUserAccountRepository<AccountService> repository)
+        public AccountService(IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _mapper = mapper;
-            _repository = repository;
+            _userManager = userManager;
         }
 
-        //public async Task<ServiceResponse<Signup>> AddUserinDb(SignupDto newUser)
-        //{
-        //    ServiceResponse<Signup> serviceResponseModel = new ServiceResponse<Signup>();
-        //    try
-        //    {
-        //     ;
-        //        serviceResponseModel.Data = _mapper.Map<Signup>(newUser);
-        //        serviceResponseModel.IsSuccess = true;
-        //        serviceResponseModel.Message = "Sign up successful!";
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        serviceResponseModel.Data = null;
-        //        serviceResponseModel.IsSuccess = false;
-        //        serviceResponseModel.Message = e.Message;
-        //    }
-
-        //    return serviceResponseModel;
-        //}
-
-        public async Task<Response<RegisterRequest>> CreateUserAccount(RegisterRequest newUser)
+        public async Task<Response<string>> RegisterAsync(RegisterRequest request)
         {
+            var usernameWithSameUsername = await _userManager.FindByNameAsync(request.Username);
+          
+            if (usernameWithSameUsername != null)
+            {
+                throw new APIException($"Username {request.Username} is already taken.");
+            }
 
-            var account = await _repository.FindByUsername(newUser.Username);
+            var account = new ApplicationUser()
+            {
+                UserName = request.Username,
+                DateCreated = DateTime.Now.ToString("dddd, dd/MM/yyyy - hh:mm tt")
+            };
 
-            return new Response<RegisterRequest>();
-        }
+            try
+            {
+                var result = await _userManager.CreateAsync(account, request.Password);
 
-        public async Task<Response<string>> RegisterAsync(RegisterRequest register)
-        {
+                if(!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        throw new APIException(error.Description);
+                    }
+                }
+                return new Response<string>(message: $"Successfuly created your account.");
+            }
+            catch (AggregateException e)
+            {}
 
-
-
-            return new Response<string>();
+            return null;
         }
     }
 }
