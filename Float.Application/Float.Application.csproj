@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Exceptions\" />
     <Folder Include="Enum\" />
     <Folder Include="Services\" />
   </ItemGroup>
