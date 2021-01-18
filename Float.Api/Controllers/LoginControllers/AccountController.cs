@@ -12,21 +12,20 @@ namespace Float.Api.Controllers.LoginControllers
     [ApiController]
     public class AccountController : Controller
     {
-        private readonly ISignupService _signupService;
+        private readonly IAccountService _signupService;
             
-        public AccountController(ISignupService signupService)
+        public AccountController(IAccountService signupService)
         {
             _signupService = signupService;
         }
 
-        [HttpPost("api/v1/get/signup")]
-        public async Task<IActionResult> GetSignup([FromBody] UserAccountDTO signup)
+        [HttpGet("api/v1/get/signup")]
+        public async Task<IActionResult> GetSignup( )
         {
             dynamic result;
-
             try
             {
-                result = await _signupService.AddUserinDb(signup);
+                result = await _signupService.CreateUserAccount(new UserAccountDTO());
                 return Ok(result);
             }
             catch (Exception e)
