@@ -4,13 +4,13 @@ using System.Text;
 
 namespace Float.Application.Exceptions
 {
-   public class APIException : Exception
+   public class ApiException : Exception
     {
-        public APIException() : base()
+        public ApiException() : base()
         {
 
         }
-        public APIException(string message) : base(message)
+        public ApiException(string message) : base(message)
         {
 
         }

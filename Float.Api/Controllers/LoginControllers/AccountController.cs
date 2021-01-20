@@ -14,32 +14,30 @@ namespace Float.Api.Controllers.LoginControllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
-            
+
         public AccountController(IAccountService signupService)
         {
             _accountService = signupService;
         }
 
-        //[HttpGet("api/v1/get/signup")]
-        //public async Task<IActionResult> GetSignup( )
-        //{
-        //    dynamic result;
-        //    try
-        //    {
-        //        result = await _accountService.CreateUserAccount(new RegisterRequest());
-        //        return Ok(result);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(e.Message);
-        //    }
-        //}
-
-
         [HttpPost("api/v1/post/register")]
-        public async Task<IActionResult> RegisterUser([FromBody] RegisterRequest register)
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterRequest model)
         {
-            return Ok(await _accountService.RegisterAsync(register));
+            return Ok(await _accountService.RegisterAsync(model));
         }
+
+        [HttpGet("api/v1/get/login")]
+        public async Task<IActionResult> AuthenticateUser([FromBody] LoginRequest model)
+        {
+            return Ok(await _accountService.AuthenticateAsync(model));
+        }
+
+        [HttpPut("api/v1/put/reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest model)
+        {
+            return Ok(await _accountService.ResetPasswordAsync(model));
+        }
+
+
     }
 }

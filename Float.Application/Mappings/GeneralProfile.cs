@@ -11,7 +11,7 @@ namespace Float.Application.Mappings
     {
         public GeneralProfile()
         {
-            CreateMap<RegisterRequest, UserAccount>().ReverseMap();
+            //CreateMap<RegisterRequest, UserAccount>().ReverseMap();
         }
     }
 }
