@@ -16,20 +16,70 @@ namespace Float.Application.Services.AccountServices
     {
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AccountService(IMapper mapper, UserManager<ApplicationUser> userManager)
+        public AccountService(IMapper mapper, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _mapper = mapper;
             _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        public async Task<Response<string>> ResetPasswordAsync(ResetPasswordRequest model)
+        {
+            var account = await _userManager.FindByNameAsync(model.Username);
+
+            if (account == null)
+            {
+                throw new ApiException($"Account does not exist.");
+            }
+
+            string resultToken = await _userManager.GeneratePasswordResetTokenAsync(account);
+
+            var response = await _userManager.ResetPasswordAsync(account, resultToken, model.NewPassword);
+
+            if (response.Succeeded)
+            {
+                return new Response<string>("Successfuly changed your password");
+            }
+            else
+            {
+                throw new ApiException("An error occured while changing your password.");
+            }
+        }
+
+        public async Task<Response<LoginResponse>> AuthenticateAsync(LoginRequest model)
+        {
+            var account = await _userManager.FindByNameAsync(model.Username);
+
+            if (account == null)
+            {
+                throw new ApiException("Wrong username or password");
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(account.UserName, model.Password, isPersistent: false, lockoutOnFailure: false);
+
+
+            if (!result.Succeeded)
+            {
+                throw new ApiException("Wrong username or password");
+            }
+
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.Username = model.Username;
+            loginResponse.Password = model.Password;
+            loginResponse.IsVerified = true;
+            return new Response<LoginResponse>(loginResponse, $"Authenticated Successfuly");
+
         }
 
         public async Task<Response<string>> RegisterAsync(RegisterRequest request)
         {
             var usernameWithSameUsername = await _userManager.FindByNameAsync(request.Username);
-          
+
             if (usernameWithSameUsername != null)
             {
-                throw new APIException($"Username {request.Username} is already taken.");
+                throw new ApiException($"Username {request.Username} is already taken.");
             }
 
             var account = new ApplicationUser()
@@ -42,17 +92,17 @@ namespace Float.Application.Services.AccountServices
             {
                 var result = await _userManager.CreateAsync(account, request.Password);
 
-                if(!result.Succeeded)
+                if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
                     {
-                        throw new APIException(error.Description);
+                        throw new ApiException(error.Description);
                     }
                 }
                 return new Response<string>(message: $"Successfuly created your account.");
             }
             catch (AggregateException e)
-            {}
+            { }
 
             return null;
         }
