@@ -1,3 +1,4 @@
+using Float.Api.Middleware;
 using Float.Application;
 using Float.Infrastracture.Identity;
 using Float.Infrastracture.Persistence;
@@ -50,6 +51,7 @@ namespace Float.Api
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseMiddleware<ErrorHandlerMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
