@@ -35,7 +35,7 @@ namespace Float.Api.Controllers.LoginControllers
         [HttpPut("api/v1/put/reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest model)
         {
-            return Ok(await _accountService.ResetPasswordAsync(model));
+                return Ok(await _accountService.ResetPasswordAsync(model));
         }
 
 
