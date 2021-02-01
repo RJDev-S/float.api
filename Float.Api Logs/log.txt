@@ -1,0 +1,52 @@
+01/22/2021 00:43:04 +08:00 Float.Api Starting.
+01/22/2021 00:43:05 +08:00 User profile is available. Using '"C:\Users\prisma\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+01/22/2021 00:43:06 +08:00 Now listening on: "https://localhost:9024"
+01/22/2021 00:43:06 +08:00 Now listening on: "http://localhost:5000"
+01/22/2021 00:43:06 +08:00 Application started. Press Ctrl+C to shut down.
+01/22/2021 00:43:06 +08:00 Hosting environment: "Development"
+01/22/2021 00:43:06 +08:00 Content root path: "C:\Users\prisma\Documents\GitHub\Visual Studio\Float.Api\Float.Api"
+01/22/2021 00:43:06 +08:00 Request starting HTTP/2 GET https://localhost:9024/swagger/index.html  
+01/22/2021 00:43:06 +08:00 Request finished in 44.6027ms 200 text/html;charset=utf-8
+01/22/2021 00:43:07 +08:00 Request starting HTTP/2 GET https://localhost:9024/swagger/v1/swagger.json  
+01/22/2021 00:43:07 +08:00 Request finished in 66.5772ms 200 application/json;charset=utf-8
+01/22/2021 09:51:16 +08:00 Float.Api Starting.
+01/22/2021 09:51:17 +08:00 User profile is available. Using '"C:\Users\prisma\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+01/22/2021 09:51:20 +08:00 Now listening on: "https://localhost:9024"
+01/22/2021 09:51:20 +08:00 Now listening on: "http://localhost:5000"
+01/22/2021 09:51:20 +08:00 Application started. Press Ctrl+C to shut down.
+01/22/2021 09:51:20 +08:00 Hosting environment: "Development"
+01/22/2021 09:51:20 +08:00 Content root path: "C:\Users\prisma\Documents\GitHub\Visual Studio\Float.Api\Float.Api"
+01/22/2021 09:51:21 +08:00 Request starting HTTP/2 GET https://localhost:9024/swagger/index.html  
+01/22/2021 09:51:21 +08:00 Request finished in 43.6145ms 200 text/html;charset=utf-8
+01/22/2021 09:51:21 +08:00 Request starting HTTP/2 GET https://localhost:9024/swagger/v1/swagger.json  
+01/22/2021 09:51:21 +08:00 Request finished in 65.3693ms 200 application/json;charset=utf-8
+01/22/2021 09:53:39 +08:00 Float.Api Starting.
+01/22/2021 09:53:40 +08:00 User profile is available. Using '"C:\Users\prisma\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+01/22/2021 09:53:40 +08:00 Now listening on: "https://localhost:9024"
+01/22/2021 09:53:40 +08:00 Now listening on: "http://localhost:5000"
+01/22/2021 09:53:40 +08:00 Application started. Press Ctrl+C to shut down.
+01/22/2021 09:53:40 +08:00 Hosting environment: "Development"
+01/22/2021 09:53:40 +08:00 Content root path: "C:\Users\prisma\Documents\GitHub\Visual Studio\Float.Api\Float.Api"
+01/22/2021 09:53:41 +08:00 Request starting HTTP/2 GET https://localhost:9024/swagger/index.html  
+01/22/2021 09:53:41 +08:00 Request finished in 41.3283ms 200 text/html;charset=utf-8
+01/22/2021 09:53:41 +08:00 Request starting HTTP/2 GET https://localhost:9024/swagger/v1/swagger.json  
+01/22/2021 09:53:41 +08:00 Request finished in 63.1414ms 200 application/json;charset=utf-8
+01/22/2021 09:54:07 +08:00 Request starting HTTP/1.1 POST https://localhost:9024/api/v1/post/register application/json 61
+01/22/2021 09:54:07 +08:00 Executing endpoint '"Float.Api.Controllers.LoginControllers.AccountController.RegisterUser (Float.Api)"'
+01/22/2021 09:54:07 +08:00 Route matched with "{action = \"RegisterUser\", controller = \"Account\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RegisterUser(Float.Application.DTOs.Account.RegisterRequest)" on controller "Float.Api.Controllers.LoginControllers.AccountController" ("Float.Api").
+01/22/2021 09:54:08 +08:00 Entity Framework Core "5.0.1" initialized '"IdentityContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "MigrationsAssembly=Float.Infrastracture.Identity, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null "
+01/22/2021 09:54:09 +08:00 Executed DbCommand ("41"ms) [Parameters=["@__normalizedUserName_0='?' (Size = 256)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [u].[Id], [u].[AccessFailedCount], [u].[ConcurrencyStamp], [u].[DateCreated], [u].[Email], [u].[EmailConfirmed], [u].[LockoutEnabled], [u].[LockoutEnd], [u].[NormalizedEmail], [u].[NormalizedUserName], [u].[PasswordHash], [u].[PhoneNumber], [u].[PhoneNumberConfirmed], [u].[SecurityStamp], [u].[Token], [u].[TwoFactorEnabled], [u].[UserName]
+FROM [identity].[User] AS [u]
+WHERE [u].[NormalizedUserName] = @__normalizedUserName_0"
+01/22/2021 09:54:09 +08:00 Executed action "Float.Api.Controllers.LoginControllers.AccountController.RegisterUser (Float.Api)" in 1473.4238ms
+01/22/2021 09:54:09 +08:00 Executed endpoint '"Float.Api.Controllers.LoginControllers.AccountController.RegisterUser (Float.Api)"'
+01/22/2021 09:54:09 +08:00 HTTP "POST" "/api/v1/post/register" responded 400 in 1587.5098 ms
+01/22/2021 09:54:09 +08:00 Request finished in 1615.0034ms 400 application/json
+01/22/2021 10:03:13 +08:00 Float.Api Starting.
+01/22/2021 10:03:13 +08:00 User profile is available. Using '"C:\Users\prisma\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest.
+01/22/2021 10:03:14 +08:00 Now listening on: "https://localhost:9024"
+01/22/2021 10:03:14 +08:00 Now listening on: "http://localhost:5000"
+01/22/2021 10:03:14 +08:00 Application started. Press Ctrl+C to shut down.
+01/22/2021 10:03:14 +08:00 Hosting environment: "Development"
+01/22/2021 10:03:14 +08:00 Content root path: "C:\Users\prisma\Documents\GitHub\Visual Studio\Float.Api\Float.Api"
