@@ -70,7 +70,6 @@ namespace Float.Application.Services.AccountServices
             loginResponse.Password = model.Password;
             loginResponse.IsVerified = true;
             return new Response<LoginResponse>(loginResponse, $"Authenticated Successfuly");
-
         }
 
         public async Task<Response<string>> RegisterAsync(RegisterRequest request)
@@ -99,9 +98,9 @@ namespace Float.Application.Services.AccountServices
                         throw new ApiException(error.Description);
                     }
                 }
-                return new Response<string>(message: $"Successfuly created your account.");
+                return new Response<string>($"Successfuly created your account.", true);
             }
-            catch (AggregateException e)
+            catch (AggregateException e) 
             { }
 
             return null;
