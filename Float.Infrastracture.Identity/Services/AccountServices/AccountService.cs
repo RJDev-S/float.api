@@ -7,6 +7,7 @@ using Float.Application.Wrappers;
 using Float.Infrastracture.Identity.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 
@@ -17,12 +18,15 @@ namespace Float.Application.Services.AccountServices
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger<AccountService> _logger;
 
-        public AccountService(IMapper mapper, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountService(IMapper mapper, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, 
+            ILogger<AccountService> logger)
         {
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         public async Task<Response<string>> ResetPasswordAsync(ResetPasswordRequest model)
@@ -34,18 +38,28 @@ namespace Float.Application.Services.AccountServices
                 throw new ApiException($"Account does not exist.");
             }
 
-            string resultToken = await _userManager.GeneratePasswordResetTokenAsync(account);
-
-            var response = await _userManager.ResetPasswordAsync(account, resultToken, model.NewPassword);
-
-            if (response.Succeeded)
+          
+            try
             {
-                return new Response<string>("Successfuly changed your password");
+                string resultToken = await _userManager.GeneratePasswordResetTokenAsync(account);
+                var response = await _userManager.ResetPasswordAsync(account, resultToken, model.NewPassword); 
+                
+                if (response.Succeeded)
+                {
+                    return new Response<string>("Successfuly changed your password");
+                }
+                else
+                {
+                    throw new ApiException("An error occured while changing your password.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                throw new ApiException("An error occured while changing your password.");
+                _logger.LogCritical("Unable to generate token");
             }
+
+            return new Response<string>();
+         
         }
 
         public async Task<Response<LoginResponse>> AuthenticateAsync(LoginRequest model)
