@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Float.Api
 {
@@ -18,7 +15,8 @@ namespace Float.Api
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
-
+            string applicationPath=  Directory.GetCurrentDirectory();
+            Environment.SetEnvironmentVariable("Float.Api Logs", applicationPath);
             //Initialize Logger
             Log.Logger = new LoggerConfiguration().
                 ReadFrom.Configuration(config).
