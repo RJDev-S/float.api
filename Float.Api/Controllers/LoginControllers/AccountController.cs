@@ -20,24 +20,22 @@ namespace Float.Api.Controllers.LoginControllers
             _accountService = signupService;
         }
 
-        [HttpPost("api/v1/post/register")]
+        [HttpPost("api/v1/user/register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterRequest model)
         {
             return Ok(await _accountService.RegisterAsync(model));
         }
 
-        [HttpGet("api/v1/get/login")]
+        [HttpPost("api/v1/user/authenticate")]
         public async Task<IActionResult> AuthenticateUser([FromBody] LoginRequest model)
         {
             return Ok(await _accountService.AuthenticateAsync(model));
         }
 
-        [HttpPut("api/v1/put/reset-password")]
+        [HttpPut("api/v1/user/reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest model)
         {
-                return Ok(await _accountService.ResetPasswordAsync(model));
+            return Ok(await _accountService.ResetPasswordAsync(model));
         }
-
-
     }
 }

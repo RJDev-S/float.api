@@ -33,7 +33,6 @@ namespace Float.Api.Middleware
                
                 var response = context.Response;
                 response.ContentType = "application/json";
-                var responseModel = new Response<string>() { Succeeded = false, Message = error?.Message};
                 switch (error)
                 {
                     case ApiException e:
@@ -49,6 +48,7 @@ namespace Float.Api.Middleware
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
+                Response<string> responseModel = new Response<string>() { StatusCode = response.StatusCode, Data = error?.Message };
 
                 _logger.LogError($"Log Message: {responseModel} - Status Code {response.StatusCode}");
 

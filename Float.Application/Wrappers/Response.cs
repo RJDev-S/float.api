@@ -10,25 +10,25 @@ namespace Float.Application.Wrappers
         {
 
         }
+        public Response(int statusCode)
+        {
+            StatusCode = statusCode;
+        }
 
-        public Response(T data, string message = null)
+        public Response(int statusCode, T data)
         {
             Data = data;
-            Message = message;
-            Succeeded = true;
+            StatusCode = statusCode;
 
         }
 
-        public Response(string message, bool succeeded = false)
-        {
-            Succeeded = succeeded;
-            Message = message;
-        }
+        //public Response(int statusCode)
+        //{
+        //    StatusCode = statusCode;
+        //}
 
+        public int StatusCode { get; set; }
         public T Data { get; set; }
-        public string Message { get; set; }
-        public bool Succeeded { get; set; }
-        public List<string> Errors { get; set; }
 
     }
 }
