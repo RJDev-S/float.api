@@ -6,7 +6,7 @@ namespace Float.Application.Interfaces
 {
     public interface IAccountService
     {
-        Task<Response<string>> RegisterAsync(RegisterRequest registerRequest);
+        Task<Response<RegisterResponse>> RegisterAsync(RegisterRequest registerRequest);
         Task<Response<LoginResponse>> AuthenticateAsync(LoginRequest registerRequest);
         Task<Response<string>> ResetPasswordAsync(ResetPasswordRequest changePasswordRequest);
     }

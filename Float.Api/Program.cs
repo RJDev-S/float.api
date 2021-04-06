@@ -15,6 +15,7 @@ namespace Float.Api
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
+
             string applicationPath=  Directory.GetCurrentDirectory();
             Environment.SetEnvironmentVariable("Float.Api Logs", applicationPath);
             //Initialize Logger

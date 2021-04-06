@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Float.Application.Services.AccountServices
@@ -46,7 +47,7 @@ namespace Float.Application.Services.AccountServices
                 
                 if (response.Succeeded)
                 {
-                    return new Response<string>("Successfuly changed your password");
+                    return new Response<string>((int)HttpStatusCode.OK, "Successfuly changed your password");
                 }
                 else
                 {
@@ -65,14 +66,12 @@ namespace Float.Application.Services.AccountServices
         public async Task<Response<LoginResponse>> AuthenticateAsync(LoginRequest model)
         {
             var account = await _userManager.FindByNameAsync(model.Username);
-
             if (account == null)
             {
                 throw new ApiException("Wrong username or password");
             }
 
             var result = await _signInManager.PasswordSignInAsync(account.UserName, model.Password, isPersistent: false, lockoutOnFailure: false);
-
 
             if (!result.Succeeded)
             {
@@ -83,11 +82,13 @@ namespace Float.Application.Services.AccountServices
             loginResponse.Username = model.Username;
             loginResponse.Password = model.Password;
             loginResponse.IsVerified = true;
-            return new Response<LoginResponse>(loginResponse, $"Authenticated Successfuly");
+            return new Response<LoginResponse>((int)HttpStatusCode.OK, loginResponse);
         }
 
-        public async Task<Response<string>> RegisterAsync(RegisterRequest request)
+        public async Task<Response<RegisterResponse>> RegisterAsync(RegisterRequest request)
         {
+
+            RegisterResponse registerResponse = new RegisterResponse();
             var usernameWithSameUsername = await _userManager.FindByNameAsync(request.Username);
 
             if (usernameWithSameUsername != null)
@@ -100,11 +101,10 @@ namespace Float.Application.Services.AccountServices
                 UserName = request.Username,
                 DateCreated = DateTime.Now.ToString("dddd, dd/MM/yyyy - hh:mm tt")
             };
-
+         
             try
             {
                 var result = await _userManager.CreateAsync(account, request.Password);
-
                 if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
@@ -112,7 +112,7 @@ namespace Float.Application.Services.AccountServices
                         throw new ApiException(error.Description);
                     }
                 }
-                return new Response<string>($"Successfuly created your account.", true);
+                return new Response<RegisterResponse>((int)HttpStatusCode.OK);
             }
             catch (AggregateException e) 
             { }
